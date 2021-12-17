@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -155,15 +156,35 @@ namespace AppStartHelper
                 }
             }
         }
-
+        Process currentProc;
         private void StartAppButton_Click(object sender, RoutedEventArgs e)
         {
-
+            currentProc = new Process();
+            currentProc.StartInfo = new ProcessStartInfo(FilePathTextBox.Text);
+            currentProc.Start();
+            StartAppButton.IsEnabled = false;
+            CategoryListBox.IsEnabled = false;
+            ApplicationListBox.IsEnabled = false;
+            StopAppButton.IsEnabled = true;
         }
 
         private void StopAppButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (currentProc != null)
+            {
+                try
+                {
+                    currentProc.Kill();
+                }
+                catch
+                {
+                    MessageBox.Show("Process stop error!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            StartAppButton.IsEnabled = true;
+            CategoryListBox.IsEnabled = true;
+            ApplicationListBox.IsEnabled = true;
+            StopAppButton.IsEnabled = false;
         }
     }
 }
