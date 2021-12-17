@@ -37,31 +37,33 @@
         </Grid.Resources>
         
         <DockPanel Grid.Column="0">
+            <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Categories:</Label>
             <DockPanel DockPanel.Dock="Bottom">
                 <Button x:Name="CategoryAddButton" Click="CategoryAddButton_Click">Add</Button>
                 <Button x:Name="CategoryDeleteButton" DockPanel.Dock="Right" Click="CategoryDeleteButton_Click">Delete</Button>
             </DockPanel>
             <TextBox x:Name="CategoryNameTextBox" DockPanel.Dock="Bottom"/>
             <Label Content="Category:" DockPanel.Dock="Bottom"/>
-            <ListBox x:Name="CategoryListBox" DisplayMemberPath="CategoryName"/>
+            <ListBox x:Name="CategoryListBox" DisplayMemberPath="CategoryName" SelectionChanged="CategoryListBox_SelectionChanged"/>
         </DockPanel>
         <DockPanel Grid.Column="1">
+            <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Applications:</Label>
             <DockPanel DockPanel.Dock="Bottom">
-                <Button x:Name="ApplicationAddButton">Add</Button>
-                <Button x:Name="ApplicationDeleteButton" DockPanel.Dock="Right">Delete</Button>
+                <Button x:Name="ApplicationAddButton" Click="ApplicationAddButton_Click">Add</Button>
+                <Button x:Name="ApplicationDeleteButton" DockPanel.Dock="Right" Click="ApplicationDeleteButton_Click">Delete</Button>
             </DockPanel>
-            <TextBox DockPanel.Dock="Bottom"/>
-            <Label Content="Application:" DockPanel.Dock="Bottom"/>
-            <ListBox x:Name="ApplicationListBox"/>
+            <!--<TextBox DockPanel.Dock="Bottom"/>-->
+            <!--<Label Content="Application:" DockPanel.Dock="Bottom"/>-->
+            <ListBox x:Name="ApplicationListBox" DisplayMemberPath="FileName" SelectionChanged="ApplicationListBox_SelectionChanged"/>
         </DockPanel>
         <DockPanel Grid.Column="2">
 
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="StartAppButton" Content="Start"/>
-                <Button x:Name="StopAppButton" Content="Stop"/>
+                <Button x:Name="StartAppButton" Content="Start" Click="StartAppButton_Click"/>
+                <Button x:Name="StopAppButton" Content="Stop" Click="StopAppButton_Click"/>
             </StackPanel>
-            <TextBox DockPanel.Dock="Bottom" Height="150"/>
-            <Label DockPanel.Dock="Bottom" x:Name="FilePathTextBox">Путь к exe файлу:</Label>
+            <TextBox DockPanel.Dock="Bottom" Height="150" x:Name="FilePathTextBox" IsEnabled="False" TextWrapping="Wrap"/>
+            <Label DockPanel.Dock="Bottom"  >Путь к exe файлу:</Label>
             <Image Source="Images/images.png"/>
         </DockPanel>
     </Grid>

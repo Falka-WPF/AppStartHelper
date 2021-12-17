@@ -5,22 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppStartHelper"
         mc:Ignorable="d"
-        Title="PathSelectorView" Height="200" Width="300">
+        Title="PathSelectorView" Height="240" Width="300"
+        MinHeight="240"
+        MinWidth="300"
+        MaxHeight="300"
+        MaxWidth="400"
+        WindowStartupLocation="CenterScreen">
     <StackPanel HorizontalAlignment="Center">
         <StackPanel.Resources>
             <Style TargetType="TextBox">
                 <Setter Property="Margin" Value="5"/>
+                <Setter Property="Padding" Value="5"/>
             </Style>
             <Style TargetType="Label">
                 <Setter Property="Margin" Value="2"/>
+                <Setter Property="FontSize" Value="16"/>
             </Style>
             <Style TargetType="Button">
                 <Setter Property="Margin" Value="2"/>
+                <Setter Property="Padding" Value="4"/>
+
             </Style>
         </StackPanel.Resources>
+        <Label>Enter Name:</Label>
+        <TextBox Width="200" x:Name="Name_TextBox"/>
         <Label>Select Application:</Label>
-        <TextBox Width="200"/>
-        <Button>Select</Button>
-        <Button>Add</Button>
+        <TextBox Width="200" x:Name="Path_TextBox" IsEnabled="False"/>
+        <Button x:Name="SelectButton" Click="SelectButton_Click">Select</Button>
+        <Button x:Name="AddButton" Click="AddButton_Click">Add</Button>
     </StackPanel>
 </Window>

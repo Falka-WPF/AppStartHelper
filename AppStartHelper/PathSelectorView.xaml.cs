@@ -19,9 +19,35 @@ namespace AppStartHelper
     /// </summary>
     public partial class PathSelectorView : Window
     {
+        public string ApplicationName { get; set; }
+        public string ApplicationPath { get; set; }
         public PathSelectorView()
         {
             InitializeComponent();
+        }
+
+
+        private void SelectButton_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
+            if (ofd.ShowDialog()==true)
+            {
+                ApplicationPath = ofd.FileName;
+            }
+            Path_TextBox.Text = ApplicationPath;
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            ApplicationName = Name_TextBox.Text;
+            if (String.IsNullOrWhiteSpace(ApplicationPath) || String.IsNullOrWhiteSpace(ApplicationName))
+            {
+                MessageBox.Show("Some fields aren`t filled!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                this.DialogResult = true;
+            }
         }
     }
 }

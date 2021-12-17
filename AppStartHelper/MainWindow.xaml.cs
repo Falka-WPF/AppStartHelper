@@ -49,11 +49,18 @@ namespace AppStartHelper
         {
             if (CategoryListBox.SelectedIndex != -1)
             {
-                Category selected = CategoryListBox.SelectedItem as Category;
-                db.CategorySet.Remove(selected);
-                db.SaveChanges();
-                LoadCategories();
-                MessageBox.Show("Category deleted!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                try
+                {
+                    Category selected = CategoryListBox.SelectedItem as Category;
+                    db.CategorySet.Remove(selected);
+                    db.SaveChanges();
+                    LoadCategories();
+                    MessageBox.Show("Category deleted!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch
+                {
+                    MessageBox.Show("Delete applications at first!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
             else
             {
@@ -81,11 +88,82 @@ namespace AppStartHelper
                 }
             }
         }
+        private void ApplicationAddButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (CategoryListBox.SelectedIndex != -1)
+            {
+                PathSelectorView ps = new PathSelectorView();
+                if (ps.ShowDialog() == true)
+                {
+                    Category ct = CategoryListBox.SelectedItem as Category;
+                    string appName = ps.ApplicationName;
+                    string appPath = ps.ApplicationPath;
+                    AppStartHelper.Data.Application ap = new AppStartHelper.Data.Application();
+                    ap.FileName = appName;
+                    ap.FilePath = appPath;
+                    ap.Category = ct;
+                    db.ApplicationSet.Add(ap);
+                    db.SaveChanges();
+                    LoadApps();
+                }
+            }
+        }
 
+        private void ApplicationDeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(ApplicationListBox.SelectedIndex != -1)
+            {
+                AppStartHelper.Data.Application ap = ApplicationListBox.SelectedItem as AppStartHelper.Data.Application;
+                db.ApplicationSet.Remove(ap);
+                db.SaveChanges();
+                LoadApps();
+                MessageBox.Show("Application deleted!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Application not selected!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             LoadCategories();
             LoadApps();
+        }
+
+        private void ApplicationListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(ApplicationListBox.SelectedIndex != -1)
+            {
+                AppStartHelper.Data.Application ap = ApplicationListBox.SelectedItem as AppStartHelper.Data.Application;
+                FilePathTextBox.Text = ap.FilePath;
+            }
+            else
+            {
+                FilePathTextBox.Text = "";
+            }
+        }
+
+        private void CategoryListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ApplicationListBox.Items.Clear();
+            if (CategoryListBox.SelectedIndex != -1)
+            {
+                Category ct = CategoryListBox.SelectedItem as Category;
+                foreach(var item in ct.Applications)
+                {
+                    ApplicationListBox.Items.Add(item);
+                }
+            }
+        }
+
+        private void StartAppButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void StopAppButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
